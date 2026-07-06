@@ -1,0 +1,7 @@
+ID,STUDENT_ID,CATEGORY,DESCRIPTION,STATUS
+1,1,Electric,Fan not working,OPEN
+2,2,Water,No water,OPEN
+3,3,Cleaning,Room dirty,CLOSED
+4,4,Furniture,Broken chair,OPEN
+5,5,Electric,Light not working,OPEN
+6,1,Internet,WiFi not working,OPEN

@@ -52,8 +52,10 @@ app.get("/students", async (req, res) => {
     res.json(students);
 
   } catch (err) {
+    console.error("Students API Error:", err);
+
     res.status(500).json({
-      error: "Failed to fetch students"
+      error: err.message
     });
   }
 });
@@ -75,9 +77,7 @@ app.get("/students/count", async (req, res) => {
 
   }
 });
-// ===============================
 // Get Students by Department
-// Example:
 //localhost:3000/students/department/CSE
 // ===============================
 app.get("/students/department/:department", async (req, res) => {
@@ -253,34 +253,34 @@ app.get("/students-with-room", async (req, res) => {
 
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch join data" });
+    res.status(500).json({
+      error: "Failed to fetch join data"
+    });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000 🚀");
-});
 // Room Occupancy
 app.get("/rooms", async (req, res) => {
-
   try {
-
     const rooms = await prisma.room.findMany({
-
       include: {
         students: true
       }
-
     });
 
     res.json(rooms);
 
   } catch (err) {
+    console.error("Rooms API Error:", err);
 
     res.status(500).json({
-      error: "Failed to fetch rooms"
+      error: err.message
     });
-
   }
+});
 
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT} 🚀`);
 });

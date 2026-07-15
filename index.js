@@ -6,6 +6,12 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK"
+  });
+});
+
 // Home Route
 app.get("/", (req, res) => {
   res.send("Hostel API Running 🚀");
@@ -282,5 +288,5 @@ app.get("/rooms", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} 🚀`);
+  console.log(`${process.env.APP_NAME} running on port ${PORT} 🚀`);
 });

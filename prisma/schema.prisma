@@ -6,6 +6,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
   id       Int    @id @default(autoincrement())
   name     String
@@ -15,27 +16,25 @@ model User {
 }
 
 model Room {
-  id          Int    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   room_number String
   block       String
   capacity    Int
   occupied    Int
-
   students    Student[]
 }
 
 model Student {
-  id          Int    @id @default(autoincrement())
-  name        String
-  email       String @unique
-  department  String?
-  year        Int?
-  status      String?
-  room_id     Int?
-
-  room        Room? @relation(fields: [room_id], references: [id])
-  fees        Fee[]
-  complaints  Complaint[]
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  department String?
+  year       Int?
+  status     String?
+  room_id    Int?
+  complaints Complaint[]
+  fees       Fee[]
+  room       Room?       @relation(fields: [room_id], references: [id])
 }
 
 model Fee {
@@ -43,7 +42,6 @@ model Fee {
   student_id Int
   amount     Float
   status     String
-
   student    Student @relation(fields: [student_id], references: [id])
 }
 
@@ -53,7 +51,6 @@ model Complaint {
   category    String
   description String
   status      String
-
   student     Student @relation(fields: [student_id], references: [id])
 }
 

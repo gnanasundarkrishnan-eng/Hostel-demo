@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: hostel-api-ingress
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - host: hostel.local
+
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: hostel-api-service
+                port:
+                  number: 3000
+                  

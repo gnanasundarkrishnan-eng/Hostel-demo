@@ -38,5 +38,20 @@ jobs:
       - name: Push Docker Image
         run: docker push gnanasundar126/hostel-demo-app:latest
 
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/secret.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+
+      - name: Restart Kubernetes Deployment
+        run: |
+          kubectl rollout restart deployment hostel-api
+
+      - name: Check Deployment Status
+        run: |
+          kubectl rollout status deployment hostel-api
+
       - name: Success Message
-        run: echo "CI Pipeline Completed Successfully!"
+        run: echo "CI/CD Pipeline Completed Successfully!"

@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: hostel-api
-          image: gnanasundar126/hostel-demo-app:v3
+          image: gnanasundar126/hostel-demo-app:latest
           imagePullPolicy: IfNotPresent
 
           ports:

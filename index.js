@@ -1,7 +1,13 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
+const { SQSClient, SendMessageCommand } = require("@aws-sdk/client-sqs");
 
 const prisma = new PrismaClient();
+
+const sqsClient = new SQSClient({
+  region: "us-east-1",
+});
+
 const app = express();
 
 app.use(express.json());
@@ -145,6 +151,18 @@ app.post("/students", async (req, res) => {
         status: "ACTIVE"
       }
     });
+        // Send message to SQS
+    const command = new SendMessageCommand({
+      QueueUrl: "https://sqs.us-east-1.amazonaws.com/948845146210/student-queue",
+      MessageBody: JSON.stringify({
+        event: "StudentCreated",
+        studentId: student.id,
+        name: student.name,
+        email: student.email
+      })
+    });
+
+    await sqsClient.send(command);
 
     res.json(student);
   } catch (err) {

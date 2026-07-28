@@ -1,3 +1,5 @@
+
+require("dotenv").config();
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const { SQSClient, SendMessageCommand } = require("@aws-sdk/client-sqs");
@@ -164,10 +166,15 @@ app.post("/students", async (req, res) => {
 
     await sqsClient.send(command);
 
-    res.json(student);
-  } catch (err) {
-    res.status(500).json({ error: "Create failed" });
-  }
+res.json(student);
+} catch (err) {
+  console.error("Create Student Error:", err);
+
+  res.status(500).json({
+    error: "Create failed",
+    message: err.message
+  });
+}
 });
 
 // Update Student Status
